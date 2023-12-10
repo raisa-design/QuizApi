@@ -1,11 +1,11 @@
-﻿//using QuizApi.Data;
-using Microsoft.EntityFrameworkCore;
-//using QuizApi.Application;
+﻿using MySqlConnector;
+using QuizApi.Application;
+using QuizApi.Repository;
+using System.Data;
 
-namespace QuizApi
+namespace QuizApi 
 
 {
-
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -20,10 +20,12 @@ namespace QuizApi
             //services.AddDbContext<DataContext>(
             //    context => context.UseSqlite(Configuration.GetConnectionString("SqliteDataBase")));
 
+            services.AddTransient<IDbConnection>(b => new MySqlConnection(Configuration.GetConnectionString("MySqlConnection")));
             services.AddControllers().AddNewtonsoftJson(options =>
-               options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
-           // services.AddScoped<QuizAplication>(); // Registrar o serviço QuizAplication
+            services.AddScoped<QuizApplication>(); // Registrar o serviço QuizApplication
+            services.AddScoped<QuizRepository>();
             services.AddControllers();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();

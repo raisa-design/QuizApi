@@ -1,52 +1,35 @@
 ﻿
+using QuizApi.Data;
+using QuizApi.Entity;
+using QuizApi.Repository;
 
+namespace QuizApi.Application
+{
+    public class QuizApplication
+    {
+        private readonly QuizRepository _quizRepository;
 
+        public QuizApplication(QuizRepository quizRepository)
+        {
+            _quizRepository = quizRepository;
+        }
 
+        public async Task<List<Quiz>> ObterTodosQuizes()
+        {
+            try
+            {
+                var quizes = await _quizRepository.GetAllQuizzes();
+                if (quizes == null) return null;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-//using Microsoft.EntityFrameworkCore;
-//using QuizApi.Data;
-//using QuizApi.Entidade;
-
-//namespace QuizApi.Application
-//{
-//    public class QuizAplication
-//    {
-
-//        private readonly DataContext _context;
-
-//        public QuizAplication(DataContext context)
-//        {
-//            _context = context;
-//        }
-
-//        public async Task<List<Quiz>> ObterTodosQuizes()
-//        {
-//            try
-//            {
-//                var quizes = await _context.quizzes.ToListAsync();
-//                if (quizes == null) return null;
-
-//                return quizes;
-//            }
-//            catch (Exception ex)
-//            {
-//                throw new Exception(ex.Message);
-//            }
-//        }
-
+                return quizes;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+    }
+}
 //        public async Task<Quiz> ObterPorId(Guid id)
 //        {
 //            try
@@ -62,13 +45,13 @@
 //        }
 
 
-//        public async Task<Quiz> CadastrarQuiz( string titulo, string descricao)
+//        public async Task<Quiz> CadastrarQuiz(string titulo, string descricao)
 //        {
 //            try
 //            {
 
 //                var quiz = new Quiz();
-//                quiz.Titulo = titulo;
+//                quiz.Title = titulo;
 //                quiz.Descricao = descricao;
 //                _context.quizzes.Add(quiz);
 //                _context.SaveChanges();
@@ -87,7 +70,7 @@
 //            {
 
 //                var quiz = await _context.quizzes.FirstOrDefaultAsync(quiz => quiz.Id == id);
-//                quiz.Titulo = titulo;
+//                quiz.Title = titulo;
 //                quiz.Descricao = descricao;
 //                _context.quizzes.Update(quiz);
 //                _context.SaveChangesAsync();
@@ -172,7 +155,7 @@
 //                }
 //                else
 //                {
-//                     return "Resposta errada";
+//                    return "Resposta errada";
 //                }
 
 //            }
