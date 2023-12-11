@@ -1,5 +1,5 @@
 ﻿
-using QuizApi.Data;
+using Microsoft.EntityFrameworkCore;
 using QuizApi.Entity;
 using QuizApi.Repository;
 
@@ -14,7 +14,7 @@ namespace QuizApi.Application
             _quizRepository = quizRepository;
         }
 
-        public async Task<List<Quiz>> ObterTodosQuizes()
+        public async Task<List<Quiz>> ObterTodosQuizzes()
         {
             try
             {
@@ -28,21 +28,39 @@ namespace QuizApi.Application
                 throw new Exception(ex.Message);
             }
         }
-    }
-}
-//        public async Task<Quiz> ObterPorId(Guid id)
-//        {
-//            try
-//            {
-//                var quiz = await _context.quizzes.FirstOrDefaultAsync(x => x.Id == id);
-//                return quiz;
 
-//            }
-//            catch (Exception ex)
-//            {
-//                throw new Exception(ex.Message);
-//            }
-//        }
+
+        public async Task<Quiz> GetQuizById (int id)
+        {
+            try
+            {
+                var quiz = await _quizRepository.GetQuizById(id);
+                return quiz;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<Quiz> CreateQuiz(string title, string image)
+        {
+            try
+            {
+                var quiz = await _quizRepository.CreateQuiz(title, image);
+                return quiz;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+    }
+
+}
+
 
 
 //        public async Task<Quiz> CadastrarQuiz(string titulo, string descricao)

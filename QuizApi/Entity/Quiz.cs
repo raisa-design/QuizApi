@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
+using System.Diagnostics.Contracts;
+using FluentValidation;
 namespace QuizApi.Entity
 {
-    public class Quiz
+    public class Quiz : AbstractValidator<Quiz>
     {
         [Key]
         public int Id { get; set; }
@@ -11,6 +12,6 @@ namespace QuizApi.Entity
 
         public string Image{ get; set; }
 
-        
+
     }
 }
