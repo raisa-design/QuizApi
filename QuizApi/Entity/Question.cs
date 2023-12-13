@@ -7,7 +7,6 @@
         public string Enunciation { get; set; }
         public int QuizId { get; set; }
         public string Image { get; set; }
-
         public string CorrectAnswer { get; set; }
         
         
